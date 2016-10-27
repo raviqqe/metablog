@@ -10,4 +10,4 @@ test:
 clean:
 	go clean
 
-.PHONY: default
+.PHONY: deps test clean
