@@ -1,0 +1,12 @@
+language: go
+
+addons:
+  apt:
+    packages:
+      - bmake
+
+script:
+  - make
+  - make test
+  - bmake
+  - bmake test
