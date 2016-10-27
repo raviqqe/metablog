@@ -8,8 +8,12 @@ import (
 
 
 func main() {
-  s := newServer(":80");
+  serve(":80")
+}
 
+
+func serve(a string) {
+  s := newServer(a)
   log.Fatal(s.ListenAndServe())
 }
 
