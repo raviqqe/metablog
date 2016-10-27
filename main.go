@@ -3,6 +3,7 @@ package main
 import (
   "log"
   "net/http"
+  "os"
   "time"
 
   "github.com/docopt/docopt-go"
@@ -13,7 +14,8 @@ import (
 func main() {
   args := get_args()
   a, _ := args["<address>"].(string)
-  serve(a)
+  d, _ := args["<document_root>"].(string)
+  serve(a, d)
 }
 
 
@@ -28,21 +30,34 @@ Options:
   --version     Show version
 `
 
-  args, _  := docopt.Parse(usage, nil, true, "metablog 0.0.0", false)
+  args, e := docopt.Parse(usage, nil, true, "metablog 0.0.0", false)
+  if e != nil {
+    log.Fatal(e)
+  }
+
+  if args["--document-root"] == false {
+    d, e := os.Getwd()
+    if e != nil {
+      log.Fatal(e)
+    }
+
+    args["<document_root>"] = d
+  }
+
   return args
 }
 
 
-func serve(a string) {
-  s := newServer(a)
+func serve(a string, d string) {
+  s := newServer(a, d)
   log.Fatal(s.ListenAndServe())
 }
 
 
-func newServer(a string) http.Server {
+func newServer(a string, d string) http.Server {
   return http.Server {
     Addr: a,
-    Handler: NewHandler(),
+    Handler: NewHandler(d),
     ReadTimeout: 5 * time.Second,
     WriteTimeout: 5 * time.Second,
   }

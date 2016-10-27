@@ -1,13 +1,26 @@
 package main
 
-import "net/http"
+import (
+  "log"
+  "net/http"
+  "path/filepath"
+)
 
 
 
-type Handler struct {}
+type Handler struct {
+  document_root string
+}
 
-func NewHandler() Handler {
-  return Handler {}
+func NewHandler(d string) Handler {
+  d, e := filepath.Abs(d)
+  if e != nil {
+    log.Fatal(e)
+  }
+
+  return Handler {
+    document_root: d,
+  }
 }
 
 func (Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
