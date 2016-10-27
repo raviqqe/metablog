@@ -9,10 +9,10 @@ import (
 
 
 type Handler struct {
-  document_root string
+  document_root, command string
 }
 
-func NewHandler(d string) Handler {
+func NewHandler(d, c string) Handler {
   d, e := filepath.Abs(d)
   if e != nil {
     log.Fatal(e)
@@ -20,6 +20,7 @@ func NewHandler(d string) Handler {
 
   return Handler {
     document_root: d,
+    command: c,
   }
 }
 

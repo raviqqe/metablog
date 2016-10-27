@@ -15,19 +15,22 @@ func main() {
   args := get_args()
   a, _ := args["<address>"].(string)
   d, _ := args["<document_root>"].(string)
-  serve(a, d)
+  c, _ := args["<command>"].(string)
+  serve(a, d, c)
 }
 
 
 func get_args() map[string]interface{} {
   usage := `Usage:
-  metablog [-a <address>] [-d <document_root>]
+  metablog [-a <address>] [-d <directory>] <command>
 
 Options:
-  -h --help           Show this help
-  -a --address        Set an listen address [default: 0.0.0.0:80]
-  -d --document-root  Set a document root directory
-  --version     Show version
+  -h, --help  Show this help
+  -a <address>, --address <address>
+              Set an listen address [default: 0.0.0.0:80]
+  -d <directory>, --document-root <directory>
+              Set a document root directory
+  --version   Show version
 `
 
   args, e := docopt.Parse(usage, nil, true, "metablog 0.0.0", false)
@@ -48,16 +51,16 @@ Options:
 }
 
 
-func serve(a string, d string) {
-  s := newServer(a, d)
+func serve(a, d, c string) {
+  s := newServer(a, d, c)
   log.Fatal(s.ListenAndServe())
 }
 
 
-func newServer(a string, d string) http.Server {
+func newServer(a, d, c string) http.Server {
   return http.Server {
     Addr: a,
-    Handler: NewHandler(d),
+    Handler: NewHandler(d, c),
     ReadTimeout: 5 * time.Second,
     WriteTimeout: 5 * time.Second,
   }
