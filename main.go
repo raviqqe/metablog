@@ -1,8 +1,9 @@
 package main
 
 import (
-  "net/http"
   "log"
+  "net/http"
+  "time"
 )
 
 
@@ -22,7 +23,7 @@ func newServer(a string) http.Server {
   return http.Server {
     Addr: a,
     Handler: NewHandler(),
-    ReadTimeout: 50,
-    WriteTimeout: 50,
+    ReadTimeout: 5 * time.Second,
+    WriteTimeout: 5 * time.Second,
   }
 }
