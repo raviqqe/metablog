@@ -19,11 +19,12 @@ func main() {
 
 func get_args() map[string]interface{} {
   usage := `Usage:
-  metablog [-a <address>]
+  metablog [-a <address>] [-d <document_root>]
 
 Options:
-  -h --help     Show this help
-  -a --address  Set an listen address [default: 0.0.0.0:80]
+  -h --help           Show this help
+  -a --address        Set an listen address [default: 0.0.0.0:80]
+  -d --document-root  Set a document root directory
   --version     Show version
 `
 
