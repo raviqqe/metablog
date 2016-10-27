@@ -25,12 +25,13 @@ func get_args() map[string]interface{} {
   metablog [-a <address>] [-d <directory>] <command>
 
 Options:
-  -h, --help  Show this help
+  -h, --help  Show this help.
   -a <address>, --address <address>
-              Set an listen address [default: 0.0.0.0:80]
+              Set an listen address. [default: 0.0.0.0:80]
   -d <directory>, --document-root <directory>
-              Set a document root directory
-  --version   Show version
+              Set a document root directory. The default is a current working
+              directory.
+  --version   Show version.
 `
 
   args, e := docopt.Parse(usage, nil, true, "metablog 0.0.0", false)
