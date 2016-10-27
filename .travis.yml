@@ -5,6 +5,9 @@ addons:
     packages:
       - bmake
 
+install:
+  - make deps
+
 script:
   - make
   - make test
